@@ -84,7 +84,7 @@ func (cr *Room) SelfNick() string {
 }
 
 func (cr *Room) ListPeers() []peer.ID {
-	return cr.ps.ListPeers(topicName(cr.roomName))
+	return cr.topic.ListPeers()
 }
 
 func (cr *Room) Context() context.Context {
