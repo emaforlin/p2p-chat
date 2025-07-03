@@ -28,7 +28,7 @@ func NewChatUI(cr *chatroom.Room) *ChatUI {
 	msgBox.
 		SetDynamicColors(true).
 		SetBorder(true).
-		SetTitle(fmt.Sprintf("Room: %s", cr.RoomName()))
+		SetTitle(withColor("gray", fmt.Sprintf("Room: %s", cr.RoomName())))
 
 	msgBox.SetChangedFunc(func() {
 		app.Draw()
@@ -36,7 +36,7 @@ func NewChatUI(cr *chatroom.Room) *ChatUI {
 
 	inputCh := make(chan string, 32)
 	input := tview.NewInputField().
-		SetLabel(fmt.Sprintf("<%s> says: ", cr.SelfNick())).
+		SetLabel(fmt.Sprintf("<%s> >> ", cr.SelfNick())).
 		SetFieldWidth(0).
 		SetFieldBackgroundColor(tcell.ColorBlack)
 
@@ -60,7 +60,7 @@ func NewChatUI(cr *chatroom.Room) *ChatUI {
 
 	peerList := tview.NewTextView()
 	peerList.SetBorder(true)
-	peerList.SetTitle("Connected Peers")
+	peerList.SetTitle(withColor("purple", "Peers"))
 	peerList.SetChangedFunc(func() {
 		app.Draw()
 	})
@@ -149,7 +149,7 @@ func withColor(color, msg string) string {
 
 func shortID(id string) string {
 	if len(id) > 8 {
-		return id[:8]
+		return id[len(id)-8:]
 	}
 	return id
 }
