@@ -3,6 +3,7 @@ package discovery
 import (
 	"context"
 	"fmt"
+	"os"
 	"time"
 
 	"github.com/libp2p/go-libp2p/core/host"
@@ -21,10 +22,9 @@ type notifee struct {
 }
 
 func (d *notifee) HandlePeerFound(pi peer.AddrInfo) {
-	fmt.Printf("Discovered new peer: %s\n", pi.ID)
 	err := d.h.Connect(context.Background(), pi)
 	if err != nil {
-		fmt.Printf("Error connecting to peer %s: %v\n", pi.ID, err)
+		fmt.Fprintf(os.Stderr, "Failed to connect to peer %s: %v\n", pi.ID, err)
 		return
 	}
 }
